@@ -60,10 +60,10 @@ public class Test5 extends PianoRollMusicGenerator {
     }
 
     @Override
-    public void onLineUp(long lastTick, long currentTick, Note lastNote, Note currentNote) {
-        if (currentTick - lastTick < 200) {
-            Line2D line = layout.getLine(lastTick, currentTick, lastNote, currentNote);
-            addAll(0, generator.tickLine(line, (int) (line.getLength() * 8), lastTick, currentTick));
+    public void onLineUp(long startTick, long endTick, Note startNote, Note endNote) {
+        if (endTick - startTick < 200) {
+            Line2D line = layout.getLine(startTick, endTick, startNote, endNote);
+            addAll(0, generator.tickLine(line, (int) (line.getLength() * 8), startTick, endTick));
         }
     }
 

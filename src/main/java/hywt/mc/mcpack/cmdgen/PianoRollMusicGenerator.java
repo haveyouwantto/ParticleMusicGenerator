@@ -120,7 +120,7 @@ public abstract class PianoRollMusicGenerator extends CoorCommandGenerator {
 
     public abstract void onNote(long tick, Note note);
 
-    public abstract void onLineUp(long lastTick, long currentTick, Note lastNote, Note currentNote);
+    public abstract void onLineUp(long startTick, long endTick, Note startNote, Note endNote);
 
     public abstract void onTick(long tick);
 }
