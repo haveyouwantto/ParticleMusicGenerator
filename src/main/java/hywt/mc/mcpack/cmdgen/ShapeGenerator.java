@@ -7,8 +7,11 @@ import java.util.*;
 
 public class ShapeGenerator extends CoorCommandGenerator {
 
+    private ParticleExpression exp;
+
     public ShapeGenerator(double originX, double originY, double originZ) {
         super(originX, originY, originZ);
+        this.exp = tick -> "particle endRod ~ ~ ~ 0 0 0 0 1 force";
     }
 
     public List<String> line(Line2D line, int splits) {
@@ -17,7 +20,7 @@ public class ShapeGenerator extends CoorCommandGenerator {
         Vector2D step = vector2D.divide(splits);
         Vector2D v = (Vector2D) step.clone();
         for (int i = 0; i < splits; i++) {
-            result.add(relativePos(v.x + line.start.x, 0, v.y + line.start.y));
+            result.add(relativePos(v.x + line.start.x, 0, v.y + line.start.y) + exp.generate(i));
             v.add(step);
         }
         return result;
@@ -29,22 +32,25 @@ public class ShapeGenerator extends CoorCommandGenerator {
         Vector2D step = vector2D.divide(splits);
         Vector2D v = (Vector2D) step.clone();
         for (int i = 0; i < splits; i++) {
-            long tick = (long) (i * ((endTick - startTick) * 1d / splits) + startTick);
-            if (startTick == 897) System.out.println(startTick+" "+endTick+" "+i+" "+tick);
+            long tick = (long) (i * ((endTick - startTick) * 1d / splits));
             result.putIfAbsent(tick, new ArrayList<>());
-            result.get(tick).add(relativePos(v.x + line.start.x, 0, v.y + line.start.y));
+            result.get(tick).add(relativePos(v.x + line.start.x, 0, v.y + line.start.y) + exp.generate(i));
             v.add(step);
         }
         return result;
     }
 
     @Override
-    protected String relativePos(double x, double y, double z) {
-        return String.format("particle endRod %1$f %2$f %3$f 0 0 0 0 1 force", originX + x, originY + y, originZ + z);
-    }
-
-    @Override
     public Map<Long, Collection<String>> generate() {
         throw new UnsupportedOperationException("Method not supported.");
     }
+
+    public ParticleExpression getExp() {
+        return exp;
+    }
+
+    public void setExp(ParticleExpression exp) {
+        this.exp = exp;
+    }
+
 }

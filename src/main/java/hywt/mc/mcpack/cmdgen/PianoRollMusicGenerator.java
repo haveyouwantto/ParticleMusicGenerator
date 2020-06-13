@@ -69,7 +69,7 @@ public abstract class PianoRollMusicGenerator extends CoorCommandGenerator {
         addAll(startTick, generator.generate());
     }
 
-    protected void writeTo(FunctionWriter writer) throws IOException {
+    public void writeTo(FunctionWriter writer) throws IOException {
         generate();
         for (Map.Entry<Long, Collection<String>> entry : map.entrySet()) {
             if (writer.getTick() < entry.getKey())

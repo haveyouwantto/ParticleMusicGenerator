@@ -13,17 +13,17 @@ import javax.sound.midi.InvalidMidiDataException;
 import java.io.File;
 import java.io.IOException;
 
-public class Test5 extends PianoRollMusicGenerator {
+public class Test6 extends PianoRollMusicGenerator {
 
     private final ShapeGenerator generator;
     String color;
 
-    public Test5(double originX, double originY, double originZ, NoteMap noteMap, KeyboardLayout layout) {
+    public Test6(double originX, double originY, double originZ, NoteMap noteMap, KeyboardLayout layout) {
         super(originX, originY, originZ, noteMap, layout);
         generator = new ShapeGenerator(originX, originY, originZ);
     }
 
-    public Test5(double originX, double originY, double originZ, File mid, KeyboardLayout layout)
+    public Test6(double originX, double originY, double originZ, File mid, KeyboardLayout layout)
             throws InvalidMidiDataException, IOException {
         super(originX, originY, originZ, mid, layout);
         generator = new ShapeGenerator(originX, originY, originZ);
@@ -31,10 +31,9 @@ public class Test5 extends PianoRollMusicGenerator {
 
     public static void main(String[] args) {
         try {
-            FunctionWriter writer = new FunctionWriter("test5",
+            FunctionWriter writer = new FunctionWriter("test6",
                     "I:\\Minecraft\\Java版\\.minecraft\\saves\\Command Music");
-            Test5 t = new Test5(27.5, 66, 8.5, new File("Toby Fox - Home.mid"),
-                    new KeyboardLayout(2 / 3d, 1));
+            Test6 t = new Test6(27.5, 66, 8.5, new File("Toby Fox - Home.mid"), new KeyboardLayout(2 / 3d, 1));
             t.writeTo(writer);
             writer.close();
         } catch (InvalidMidiDataException | IOException e) {
@@ -55,8 +54,6 @@ public class Test5 extends PianoRollMusicGenerator {
                 + String.format("particleex fireworksSpark ~ ~ ~ function %s 1 240 0 0.5 0 0.5 0.5 0.5 ", color)
                 + "(x>=0.5&y>=0.5)|(x>=0.5&y<=-0.5)|(x<=-0.5&y>=0.5)|(x<=-0.5&y<=-0.5)|(y>=0.5&z>=0.5)|(y>=0.5&z<=-0.5)|(y<=-0.5&z>=0.5)|(y<=-0.5&z<=-0.5)|(z>=0.5&x>=0.5)|(z>=0.5&x<=-0.5)|(z<=-0.5&x>=0.5)|(z<=-0.5&x<=-0.5)"
                 + " 0.1 40");
-        // "particleex endRod ~ ~ ~ function 1 0.4 0.65 1 240 0 0 0 1 1 1
-        // (abs(x)+abs(y)+abs(z)<1) 0.1 40");
     }
 
     @Override
@@ -78,6 +75,8 @@ public class Test5 extends PianoRollMusicGenerator {
         teleportGenerator.setHeight(25);
         teleportGenerator.setDistance(-30);
         add(0, "tp @s ~ ~ ~ -90 46");
+        generator.setExp(tick -> String.format("particleex endRod ~ ~ ~ normal 1 1 1 1 240 0 0 %f 0 0 0 1",
+                Math.sin(tick / 10d) / 5));
     }
 
     @Override
