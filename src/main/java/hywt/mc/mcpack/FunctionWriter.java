@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FunctionWriter implements Closeable {
+public class FunctionWriter implements CommandWriter {
 
     private static final int MAX_COMMAND_LENGTH = 1024;
     private final String name;
