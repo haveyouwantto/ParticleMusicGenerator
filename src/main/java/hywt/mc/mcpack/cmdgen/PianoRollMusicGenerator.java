@@ -20,12 +20,12 @@ public abstract class PianoRollMusicGenerator extends CoorCommandGenerator {
     protected boolean teleport;
 
     public PianoRollMusicGenerator(double originX, double originY, double originZ, File midiFile, KeyboardLayout layout)
-            throws InvalidMidiDataException, IOException {
+        throws InvalidMidiDataException, IOException {
         this(originX, originY, originZ, new SimpleParser().toMCTick(midiFile), layout);
     }
 
     public PianoRollMusicGenerator(double originX, double originY, double originZ, NoteMap noteMap,
-            KeyboardLayout layout) {
+                                   KeyboardLayout layout) {
         super(originX, originY, originZ);
         this.noteMap = noteMap;
         this.layout = layout;

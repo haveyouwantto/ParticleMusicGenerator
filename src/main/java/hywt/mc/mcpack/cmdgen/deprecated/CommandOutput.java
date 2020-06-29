@@ -40,7 +40,7 @@ public class CommandOutput {
     }
 
     public void addAll(long startTick, CommandGenerator generator) {
-            addAll(startTick, generator.generate());
+        addAll(startTick, generator.generate());
     }
 
     public void setCmds(TreeMap<Long, Collection<String>> cmds) {

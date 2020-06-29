@@ -54,7 +54,7 @@ public class KeyboardLayout {
     public double getX(double n) {
         return n * timeRatio + xOffset;
     }
-    
+
     public double getZ(double n) {
         return n * keyRatio + zOffset;
     }

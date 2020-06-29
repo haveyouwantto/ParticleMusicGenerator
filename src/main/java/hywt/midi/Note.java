@@ -16,11 +16,11 @@ public class Note implements MIDIEvent, Comparable<Note> {
     @Override
     public String toString() {
         return "Note{" +
-                "track=" + track +
-                ", channel=" + channel +
-                ", pitch=" + pitch +
-                ", volume=" + volume +
-                '}';
+            "track=" + track +
+            ", channel=" + channel +
+            ", pitch=" + pitch +
+            ", volume=" + volume +
+            '}';
     }
 
     public int getTrack() {
@@ -41,6 +41,7 @@ public class Note implements MIDIEvent, Comparable<Note> {
 
     /**
      * Compare notes by pitch
+     *
      * @param o another note
      * @return comparison result
      */

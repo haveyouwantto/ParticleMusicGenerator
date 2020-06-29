@@ -12,8 +12,8 @@ public class Vector2D implements Cloneable {
 
     public static Vector2D fromPolar(double r, double o) {
         return new Vector2D(
-                r * Math.cos(o),
-                r * Math.sin(o)
+            r * Math.cos(o),
+            r * Math.sin(o)
         );
     }
 
@@ -48,9 +48,9 @@ public class Vector2D implements Cloneable {
     @Override
     public String toString() {
         return "Vector2D{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+            "x=" + x +
+            ", y=" + y +
+            '}';
     }
 
     public double getLength() {

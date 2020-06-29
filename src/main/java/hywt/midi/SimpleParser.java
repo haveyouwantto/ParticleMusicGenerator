@@ -70,10 +70,10 @@ public class SimpleParser {
                     if (sm.getCommand() == NOTE_ON && sm.getData2() != 0) {
                         midiMap.get(tracknum).putIfAbsent(event.getTick(), new ArrayList<>());
                         midiMap.get(tracknum).get(event.getTick()).add(new Note(
-                                tracknum,
-                                0,
-                                sm.getData1(),
-                                sm.getData2()
+                            tracknum,
+                            0,
+                            sm.getData1(),
+                            sm.getData2()
                         ));
                     }
                 }

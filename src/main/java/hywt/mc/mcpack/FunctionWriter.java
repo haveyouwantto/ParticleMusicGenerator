@@ -1,6 +1,9 @@
 package hywt.mc.mcpack;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,14 +67,14 @@ public class FunctionWriter implements CommandWriter {
             writer = new PrintWriter(new File(partsDir, String.format("part%03d.mcfunction", count / MAX_COMMAND_LENGTH)));
         }
         writer.println(
-                String.format(
+            String.format(
                         /*
                         %1: name of the score objective
                         %2: tick of this command
                         %3: command to execute
                          */
-                        "execute @a[score_%1$s_min=%2$d,score_%1$s=%2$d] ~ ~ ~ %3$s", name, tick, command
-                ));
+                "execute @a[score_%1$s_min=%2$d,score_%1$s=%2$d] ~ ~ ~ %3$s", name, tick, command
+            ));
         count++;
     }
 
@@ -107,7 +110,7 @@ public class FunctionWriter implements CommandWriter {
                         %3: maximum tick
                         %4: function name
                      */
-                    String.format("execute @a[score_%1$s_min=%2$d,score_%1$s=%3$d] ~ ~ ~ function %1$s:parts/part%4$03d", name, splitStart, splitEnd, i)
+                String.format("execute @a[score_%1$s_min=%2$d,score_%1$s=%3$d] ~ ~ ~ function %1$s:parts/part%4$03d", name, splitStart, splitEnd, i)
             );
         }
         mainWriter.println(String.format("scoreboard players add @a[score_%1$s_min=%2$d,score_%1$s=%3$d] %1$s 1", name, 0, parts.get(parts.size() - 1)));

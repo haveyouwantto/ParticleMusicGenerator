@@ -18,13 +18,15 @@ public class Line2D {
         return new Vector2D(end.x - start.x, end.y - start.y);
     }
 
-    public double getLength() {return this.toVector().getLength();}
+    public double getLength() {
+        return this.toVector().getLength();
+    }
 
     @Override
     public String toString() {
         return "Line2D{" +
-                "start=" + start +
-                ", end=" + end +
-                '}';
+            "start=" + start +
+            ", end=" + end +
+            '}';
     }
 }

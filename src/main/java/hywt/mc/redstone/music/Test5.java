@@ -24,7 +24,7 @@ public class Test5 extends PianoRollMusicGenerator {
     }
 
     public Test5(double originX, double originY, double originZ, File mid, KeyboardLayout layout)
-            throws InvalidMidiDataException, IOException {
+        throws InvalidMidiDataException, IOException {
         super(originX, originY, originZ, mid, layout);
         generator = new ShapeGenerator(originX, originY, originZ);
     }
@@ -52,9 +52,9 @@ public class Test5 extends PianoRollMusicGenerator {
             add(tick - 180, relativePos(point.x, 0, point.y) + "setblock ~ ~ ~ concrete " + id);
         add(tick, relativePos(point.x, 0, point.y) + "setblock ~ ~ ~ air");
         add(tick, relativePos(point.x, 0, point.y)
-                + String.format("particleex fireworksSpark ~ ~ ~ function %s 1 240 0 0.5 0 0.5 0.5 0.5 ", color)
-                + "(x>=0.5&y>=0.5)|(x>=0.5&y<=-0.5)|(x<=-0.5&y>=0.5)|(x<=-0.5&y<=-0.5)|(y>=0.5&z>=0.5)|(y>=0.5&z<=-0.5)|(y<=-0.5&z>=0.5)|(y<=-0.5&z<=-0.5)|(z>=0.5&x>=0.5)|(z>=0.5&x<=-0.5)|(z<=-0.5&x>=0.5)|(z<=-0.5&x<=-0.5)"
-                + " 0.1 40");
+            + String.format("particleex fireworksSpark ~ ~ ~ function %s 1 240 0 0.5 0 0.5 0.5 0.5 ", color)
+            + "(x>=0.5&y>=0.5)|(x>=0.5&y<=-0.5)|(x<=-0.5&y>=0.5)|(x<=-0.5&y<=-0.5)|(y>=0.5&z>=0.5)|(y>=0.5&z<=-0.5)|(y<=-0.5&z>=0.5)|(y<=-0.5&z<=-0.5)|(z>=0.5&x>=0.5)|(z>=0.5&x<=-0.5)|(z<=-0.5&x>=0.5)|(z<=-0.5&x<=-0.5)"
+            + " 0.1 40");
         // "particleex endRod ~ ~ ~ function 1 0.4 0.65 1 240 0 0 0 1 1 1
         // (abs(x)+abs(y)+abs(z)<1) 0.1 40");
     }

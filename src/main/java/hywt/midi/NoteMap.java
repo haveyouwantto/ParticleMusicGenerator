@@ -12,7 +12,7 @@ public class NoteMap {
     public NoteMap(List<TreeMap<Long, List<Note>>> notes) {
         this.notes = notes;
         length = 0;
-        for(TreeMap<Long, List<Note>> noteMap : notes){
+        for (TreeMap<Long, List<Note>> noteMap : notes) {
             try {
                 length = Math.max(length, noteMap.lastKey());
             } catch (NoSuchElementException ignored) {
@@ -28,14 +28,14 @@ public class NoteMap {
         return notes;
     }
 
-    public long length(){
+    public long length() {
         return length;
     }
 
     @Override
     public String toString() {
         return "NoteMap{" +
-                "notes=" + notes +
-                '}';
+            "notes=" + notes +
+            '}';
     }
 }

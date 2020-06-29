@@ -14,7 +14,7 @@ public class TempoChange implements MIDIEvent {
     @Override
     public String toString() {
         return "TempoChange{" +
-                "tempo=" + tempo +
-                '}';
+            "tempo=" + tempo +
+            '}';
     }
 }
