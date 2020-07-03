@@ -21,6 +21,7 @@ public class Test6 extends PianoRollMusicGenerator {
 
     private final ShapeGenerator generator;
     String color;
+    String lineColor;
     private List<ParticleExpression> expressions;
 
     public Test6(double originX, double originY, double originZ, NoteMap noteMap, KeyboardLayout layout) {
@@ -38,7 +39,7 @@ public class Test6 extends PianoRollMusicGenerator {
         try {
             FunctionWriter writer = new FunctionWriter("test6",
                     "G:\\Minecraft\\Java版\\.minecraft\\saves\\Command Music");
-            Test6 t = new Test6(27.5, 66, 8.5, new File("Toby Fox - Home.mid"), new KeyboardLayout(2 / 3d, 1));
+            Test6 t = new Test6(27.5, 66, 8.5, new File("fur_Elise_WoO59.mid"), new KeyboardLayout(2 / 3d, 1));
             t.writeTo(writer);
             writer.close();
         } catch (InvalidMidiDataException | IOException e) {
@@ -59,6 +60,8 @@ public class Test6 extends PianoRollMusicGenerator {
                 + String.format("particleex fireworksSpark ~ ~ ~ function %s 1 240 0 0.5 0 0.5 0.5 0.5 ", color)
                 + "(x>=0.5&y>=0.5)|(x>=0.5&y<=-0.5)|(x<=-0.5&y>=0.5)|(x<=-0.5&y<=-0.5)|(y>=0.5&z>=0.5)|(y>=0.5&z<=-0.5)|(y<=-0.5&z>=0.5)|(y<=-0.5&z<=-0.5)|(z>=0.5&x>=0.5)|(z>=0.5&x<=-0.5)|(z<=-0.5&x>=0.5)|(z<=-0.5&x<=-0.5)"
                 + " 0.1 40");
+            add(tick, relativePos(point.x, 0, point.y) +
+                    String.format("particleex fireworksSpark ~ ~ ~ parameter %s 1 240 0 0 0 0 100 x=sin(t)/2;z=cos(t)/2 0.5 60 vx=sin(x/20);vz=sin(z/20)", lineColor));
     }
 
     @Override
@@ -78,6 +81,7 @@ public class Test6 extends PianoRollMusicGenerator {
     @Override
     public void onTrackStart(int trackNum) {
         color = (trackNum % 2 == 0) ? "1 0.4 0.65" : "0.21 1 0.83";
+        lineColor = (trackNum % 2 == 0) ? "1 0.1 0.31" : "0.1 1 0.31";
     }
 
     @Override
@@ -91,15 +95,20 @@ public class Test6 extends PianoRollMusicGenerator {
             Mapper m = new Mapper(0, 1, 0, (int) (splits / 32) * 2 * Math.PI);
             Mapper height = new Mapper(0, splits, 0, Math.PI);
             double zFactor = m.map(tick * 1d / splits);
-            return String.format("particleex endRod ~ ~%f ~ normal 1 1 1 1 240 0 0 %f 0 0 0 1",
-            Math.sin(height.map(tick)) * (splits / 16), Math.sin(zFactor) / 8);
+            return String.format("particleex fireworksSpark ~ ~%f ~ normal %s 1 240 0 %f 0 0 0 0 1",
+                    Math.sin(height.map(tick)) * (splits / 16),
+                    lineColor,
+                    Math.sin(zFactor) / 8
+            );
         });
         expressions.add((splits, tick) -> {
             Mapper m = new Mapper(0, 1, 0, (int) (splits / 16) * 2 * Math.PI);
             Mapper height = new Mapper(0, splits, 0, Math.PI);
             double zFactor = m.map(tick * 1d / splits);
-            return String.format("particleex endRod ~ ~%f ~%f normal 1 1 1 1 240 0 0 0 0 0 0 1",
-                    Math.sin(zFactor) / 2 + Math.sin(height.map(tick)) * (splits / 32d), Math.cos(zFactor) / 2);
+            return String.format("particleex fireworksSpark ~ ~%f ~%f normal %s 1 240 0 0 0 0 0 0 1",
+                    Math.sin(zFactor) / 2 + Math.sin(height.map(tick)) * (splits / 32d),
+                    Math.cos(zFactor) / 2,
+                    lineColor);
         });
         add(0, "tp @s ~ ~ ~ -90 46");
     }
