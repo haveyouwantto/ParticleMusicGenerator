@@ -30,7 +30,7 @@ public class Test6 extends PianoRollMusicGenerator {
         super(originX, originY, originZ, mid, layout);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         try {
             FunctionWriter writer = new FunctionWriter("test6",
                     "I:\\Minecraft\\Java版\\.minecraft\\saves\\Command Music");

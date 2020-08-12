@@ -18,7 +18,7 @@ public class Test7 extends PianoRollMusicGenerator {
     private final Mapper MAPPER = new Mapper(0, 127, 0, 4 * Math.PI);
     private ShapeGenerator generator;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         try {
             FunctionWriter writer = new FunctionWriter("test7",
                     "I:\\Minecraft\\Java版\\.minecraft\\saves\\Command Music");
