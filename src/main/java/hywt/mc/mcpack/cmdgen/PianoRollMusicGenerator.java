@@ -1,6 +1,6 @@
 package hywt.mc.mcpack.cmdgen;
 
-import hywt.mc.mcpack.FunctionWriter;
+import hywt.mc.mcpack.CommandWriter;
 import hywt.midi.KeyboardLayout;
 import hywt.midi.Note;
 import hywt.midi.NoteMap;
@@ -69,7 +69,7 @@ public abstract class PianoRollMusicGenerator extends CoorCommandGenerator {
         addAll(startTick, generator.generate());
     }
 
-    public void writeTo(FunctionWriter writer) throws IOException {
+    public void writeTo(CommandWriter writer) throws Exception {
         generate();
         for (Map.Entry<Long, Collection<String>> entry : map.entrySet()) {
             if (writer.getTick() < entry.getKey())
@@ -114,13 +114,13 @@ public abstract class PianoRollMusicGenerator extends CoorCommandGenerator {
         return map;
     }
 
-    public abstract void onInitialize();
+    protected abstract void onInitialize();
 
-    public abstract void onTrackStart(int trackNum);
+    protected abstract void onTrackStart(int trackNum);
 
-    public abstract void onNote(long tick, Note note);
+    protected abstract void onNote(long tick, Note note);
 
-    public abstract void onLineUp(long startTick, long endTick, Note startNote, Note endNote);
+    protected abstract void onLineUp(long startTick, long endTick, Note startNote, Note endNote);
 
-    public abstract void onTick(long tick);
+    protected abstract void onTick(long tick);
 }

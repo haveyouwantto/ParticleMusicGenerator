@@ -1,5 +1,6 @@
 package hywt.mc.redstone.music;
 
+import hywt.math.Color3;
 import hywt.math.Line2D;
 import hywt.math.Point2D;
 import hywt.mc.mcpack.FunctionWriter;
@@ -16,7 +17,7 @@ import java.io.IOException;
 public class Test5 extends PianoRollMusicGenerator {
 
     private final ShapeGenerator generator;
-    String color;
+    Color3 color;
 
     public Test5(double originX, double originY, double originZ, NoteMap noteMap, KeyboardLayout layout) {
         super(originX, originY, originZ, noteMap, layout);
@@ -52,7 +53,7 @@ public class Test5 extends PianoRollMusicGenerator {
             add(tick - 180, relativePos(point.x, 0, point.y) + "setblock ~ ~ ~ concrete " + id);
         add(tick, relativePos(point.x, 0, point.y) + "setblock ~ ~ ~ air");
         add(tick, relativePos(point.x, 0, point.y)
-            + String.format("particleex fireworksSpark ~ ~ ~ function %s 1 240 0 0.5 0 0.5 0.5 0.5 ", color)
+            + String.format("particleex fireworksSpark ~ ~ ~ function %s 1 240 0 0.5 0 0.5 0.5 0.5 ", color.toCommandColor())
             + "(x>=0.5&y>=0.5)|(x>=0.5&y<=-0.5)|(x<=-0.5&y>=0.5)|(x<=-0.5&y<=-0.5)|(y>=0.5&z>=0.5)|(y>=0.5&z<=-0.5)|(y<=-0.5&z>=0.5)|(y<=-0.5&z<=-0.5)|(z>=0.5&x>=0.5)|(z>=0.5&x<=-0.5)|(z<=-0.5&x>=0.5)|(z<=-0.5&x<=-0.5)"
             + " 0.1 40");
         // "particleex endRod ~ ~ ~ function 1 0.4 0.65 1 240 0 0 0 1 1 1
@@ -69,7 +70,7 @@ public class Test5 extends PianoRollMusicGenerator {
 
     @Override
     public void onTrackStart(int trackNum) {
-        color = (trackNum % 2 == 0) ? "1 0.4 0.65" : "0.21 1 0.83";
+        color = (trackNum % 2 == 0) ? new Color3(1, 0.4, 0.65) : new Color3(0.21, 1, 0.83);
     }
 
     @Override

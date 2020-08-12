@@ -21,6 +21,8 @@ public class Tutorial extends PianoRollMusicGenerator {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -40,7 +42,7 @@ public class Tutorial extends PianoRollMusicGenerator {
 
     @Override
     public void onNote(long tick, Note note) {
-        add(tick,String.format("say %s", note));
+        add(tick, String.format("say %s", note));
     }
 
     @Override
