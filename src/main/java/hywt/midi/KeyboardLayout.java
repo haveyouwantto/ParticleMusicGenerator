@@ -23,32 +23,36 @@ public class KeyboardLayout {
         return timeRatio;
     }
 
-    public void setTimeRatio(double timeRatio) {
+    public KeyboardLayout setTimeRatio(double timeRatio) {
         this.timeRatio = timeRatio;
+        return this;
     }
 
     public double getKeyRatio() {
         return keyRatio;
     }
 
-    public void setKeyRatio(double keyRatio) {
+    public KeyboardLayout setKeyRatio(double keyRatio) {
         this.keyRatio = keyRatio;
+        return this;
     }
 
     public double getxOffset() {
         return xOffset;
     }
 
-    public void setxOffset(double xOffset) {
+    public KeyboardLayout setxOffset(double xOffset) {
         this.xOffset = xOffset;
+        return this;
     }
 
     public double getzOffset() {
         return zOffset;
     }
 
-    public void setzOffset(double zOffset) {
+    public KeyboardLayout setzOffset(double zOffset) {
         this.zOffset = zOffset;
+        return this;
     }
 
     public double getX(double n) {

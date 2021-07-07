@@ -11,27 +11,29 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public abstract class PianoRollMusicGenerator extends CoorCommandGenerator {
+public class PianoRollMusicGeneratorV2 extends CoorCommandGenerator {
 
-    private final NoteMap noteMap;
-    private final Map<Long, Collection<String>> map;
+    protected final NoteMap noteMap;
+    protected final MusicEventHandler handler;
+    protected final Map<Long, Collection<String>> map;
     protected final TeleportGenerator teleportGenerator;
     protected KeyboardLayout layout;
     protected boolean teleport;
 
-    public PianoRollMusicGenerator(double originX, double originY, double originZ, File midiFile, KeyboardLayout layout)
+    public PianoRollMusicGeneratorV2(double originX, double originY, double originZ, File midiFile, KeyboardLayout layout, MusicEventHandler handler)
             throws InvalidMidiDataException, IOException {
-        this(originX, originY, originZ, new SimpleParser().toMCTick(midiFile), layout);
+        this(originX, originY, originZ, new SimpleParser().toMCTick(midiFile), layout, handler);
     }
 
-    public PianoRollMusicGenerator(double originX, double originY, double originZ, NoteMap noteMap,
-                                   KeyboardLayout layout) {
+    public PianoRollMusicGeneratorV2(double originX, double originY, double originZ, NoteMap noteMap,
+                                     KeyboardLayout layout, MusicEventHandler handler) {
         super(originX, originY, originZ);
         this.noteMap = noteMap;
         this.layout = layout;
         map = new TreeMap<>();
         teleportGenerator = new TeleportGenerator(originX, originY, originZ, layout, noteMap.length());
         teleport = true;
+        this.handler = handler;
     }
 
     public NoteMap getNoteMap() {
@@ -81,15 +83,12 @@ public abstract class PianoRollMusicGenerator extends CoorCommandGenerator {
 
     @Override
     public Map<Long, Collection<String>> generate() {
-        layout.setzOffset(-64);
-        teleportGenerator.setHeight(25);
-        teleportGenerator.setDistance(-30);
-        onInitialize();
+        addAll(0, handler.onInitialize());
         addAll(0, new NoteGenerator(noteMap));
         if (teleport)
             addAll(0, teleportGenerator);
         for (int i = 0; i < noteMap.getNotes().size(); i++) {
-            onTrackStart(i);
+            addAll(0, handler.onTrackStart(i));
             long lastTick = 0;
             List<Note> lastNotes = new ArrayList<>();
             lastNotes.add(new Note(0, 0, 64, 0));
@@ -103,8 +102,8 @@ public abstract class PianoRollMusicGenerator extends CoorCommandGenerator {
                     Note note = notes.get(j);
                     Note lastNote = lastNotes.get(j % lastNotes.size());
 
-                    onNote(tick, note);
-                    onLineUp(lastTick, tick, lastNote, note);
+                    addAll(tick,handler.onNote(tick, note));
+                    addAll(tick,handler.onLineUp(lastTick, tick, lastNote, note));
                 }
                 lastTick = tick;
                 lastNotes = notes;
@@ -112,18 +111,8 @@ public abstract class PianoRollMusicGenerator extends CoorCommandGenerator {
         }
 
         for (int i = 0; i < noteMap.length(); i++)
-            onTick(i);
+            handler.onTick(i);
 
         return map;
     }
-
-    protected abstract void onInitialize();
-
-    protected abstract void onTrackStart(int trackNum);
-
-    protected abstract void onNote(long tick, Note note);
-
-    protected abstract void onLineUp(long startTick, long endTick, Note startNote, Note endNote);
-
-    protected abstract void onTick(long tick);
 }

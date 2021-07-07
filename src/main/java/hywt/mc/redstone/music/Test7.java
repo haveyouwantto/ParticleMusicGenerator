@@ -21,7 +21,7 @@ public class Test7 extends PianoRollMusicGenerator {
     public static void main(String[] args) throws Exception {
         try {
             FunctionWriter writer = new FunctionWriter("test7",
-                    "I:\\Minecraft\\Java版\\.minecraft\\saves\\Command Music");
+                    ".");
             Test7 t = new Test7(127.5, 66, 8.5,
                     new File("C:\\Users\\havey\\OneDrive\\projects\\mcws\\midis\\Touhou Mix\\Green-Eyed Jealousy_Normal.mid"),
                     new KeyboardLayout(2 / 3d, 1));
@@ -68,7 +68,7 @@ public class Test7 extends PianoRollMusicGenerator {
             Line2D line = new Line2D(0, 0, Math.sin(MAPPER.map(endNote.getPitch())) * 20,
                     Math.cos(MAPPER.map(endNote.getPitch())) * 20);
             addAll(endTick, generator.line(line, (int) (line.getLength() * 16),
-                    (splits, tick) -> String.format("particleex fireworksSpark ~ ~ ~ normal %s 1 255 0 0 0 0 0 0 1",
+                    (lineInfo, info) -> String.format("particleex fireworksSpark ~ ~ ~ normal %s 1 255 0 0 0 0 0 0 1",
                             Colors.LINE_COLORS[endNote.getTrack() % Colors.LINE_COLORS.length].toCommandColor())));
         }
     }

@@ -4,7 +4,7 @@ import hywt.math.Line2D;
 import hywt.math.Mapper;
 import hywt.math.Point2D;
 import hywt.mc.mcpack.FunctionWriter;
-import hywt.mc.mcpack.cmdgen.ParticleExpression;
+import hywt.mc.particle.ParticleExpression;
 import hywt.mc.mcpack.cmdgen.PianoRollMusicGenerator;
 import hywt.mc.mcpack.cmdgen.ShapeGenerator;
 import hywt.midi.KeyboardLayout;
@@ -33,9 +33,9 @@ public class Test6 extends PianoRollMusicGenerator {
     public static void main(String[] args) throws Exception {
         try {
             FunctionWriter writer = new FunctionWriter("test6",
-                    "I:\\Minecraft\\Java版\\.minecraft\\saves\\Command Music");
+                    "Z:\\JavaMC\\.minecraft\\saves\\Command Music");
             Test6 t = new Test6(27.5, 86, 8.5,
-                    new File("C:\\Users\\havey\\OneDrive\\TH Piano\\Ghostly Band ~ Phantom Ensemble_Normal.mid"),
+                    new File("Toby Fox - Home.mid"),
                     new KeyboardLayout(2 / 3d, 1));
             t.writeTo(writer);
             writer.close();
@@ -51,42 +51,41 @@ public class Test6 extends PianoRollMusicGenerator {
 
     @Override
     public void onInitialize() {
-        layout.setzOffset(-64);
         generator = new ShapeGenerator(originX, originY, originZ);
-        teleportGenerator.setHeight(25);
-        teleportGenerator.setDistance(-30);
+        Mapper height = new Mapper(0, 1, 0, Math.PI);
         expressions = new ParticleExpression[]{
-                (splits, tick) -> {
-                    Mapper m = new Mapper(0, 1, 0, (int) (splits / 16) * 2 * Math.PI);
-                    Mapper height = new Mapper(0, splits, 0, Math.PI);
-                    double zFactor = m.map(tick * 1d / splits);
-                    return String.format("particleex fireworksSpark ~ ~%f ~%f normal %s 1 255 0 0 0 0 0 0 1",
-                            Math.sin(zFactor) / 2 + Math.sin(height.map(tick)) * (splits / 32d),
+                (lineInfo, info) -> {
+                    double distance = lineInfo.getLine().getLength();
+                    Mapper m = new Mapper(0, 1, 0, distance * 2 * Math.PI);
+                    double zFactor = m.map(info.getProgress());
+                    return String.format("particleex normal fireworksSpark ~ ~%f ~%f %s 1 255 0 0 0 0 0 0 1",
+                            Math.sin(zFactor) / 2 + Math.sin(height.map(info.getProgress())) * distance / 2,
                             Math.cos(zFactor) / 2,
                             Colors.LINE_COLORS[0].toCommandColor());
                 },
-                (splits, tick) -> {
-                    Mapper m = new Mapper(0, 1, 0, (int) (splits / 32) * 2 * Math.PI);
-                    Mapper height = new Mapper(0, splits, 0, Math.PI);
-                    double zFactor = m.map(tick * 1d / splits);
-                    return String.format("particleex fireworksSpark ~ ~%f ~ normal %s 1 255 0 %f 0 0 0 0 1",
-                            Math.sin(height.map(tick)) * (splits / 16),
+                (lineInfo, info) -> {
+                    double distance = lineInfo.getLine().getLength();
+                    Mapper m = new Mapper(0, 1, 0, distance / 2 * Math.PI);
+                    double zFactor = m.map(info.getProgress());
+                    return String.format("particleex normal fireworksSpark ~ ~%f ~ %s 1 255 0 %f 0 0 0 0 1",
+                            Math.sin(height.map(info.getProgress())) * distance / 2,
                             Colors.LINE_COLORS[1].toCommandColor(),
-                            Math.sin(zFactor) / 8);
+                            Math.sin(zFactor) / 8
+                    );
                 },
-                (splits, tick) -> {
-                    Mapper height = new Mapper(0, splits, 0, Math.PI);
-                    return String.format("particleex fireworksSpark ~ ~%f ~ normal %s 1 255 0 0 0 0 0 0 1",
-                            Math.sin(height.map(tick)) * (splits / 16) / 2,
+                (lineInfo, info) -> {
+                    double distance = lineInfo.getLine().getLength();
+                    return String.format("particleex normal fireworksSpark ~ ~%f ~ %s 1 255 0 0 0 0 0 0 1",
+                            Math.sin(height.map(info.getProgress())) * distance / 2,
                             Colors.LINE_COLORS[2].toCommandColor());
                 },
-                (splits, tick) -> String.format("particleex fireworksSpark ~ ~ ~ normal %s 1 255 0 0 0 0 0 0 1",
+                (lineInfo, info) -> String.format("particleex normal fireworksSpark ~ ~ ~ %s 1 255 0 0 0 0 0 0 1",
                         Colors.LINE_COLORS[3].toCommandColor()),
-                (splits, tick) -> {
+                (lineInfo, info) -> {
+                    int splits = lineInfo.getSplits();
                     Mapper m = new Mapper(0, splits / 2d, 0, 3d / 4 * Math.PI);
-                    Mapper height = new Mapper(0, splits, 0, Math.PI);
-                    return String.format("particleex fireworksSpark ~ ~%f ~ normal %s 1 255 0 0 0 0 0 0 1",
-                            Math.sin(Math.abs(m.map(tick > splits / 2d ? splits - tick : tick))) * (splits / 32),
+                    return String.format("particleex normal fireworksSpark ~ ~%f ~ %s 1 255 0 0 0 0 0 0 1",
+                            Math.sin(Math.abs(m.map(info.getTick() > splits / 2d ? splits - info.getTick() : info.getTick()))) * (splits / 32),
                             Colors.LINE_COLORS[4].toCommandColor());
                 },
         };
@@ -97,19 +96,19 @@ public class Test6 extends PianoRollMusicGenerator {
     public void onNote(long tick, Note note) {
         Point2D point = layout.getPoint(tick, note);
         int id = note.getTrack() % 2 == 0 ? 1 : 13;
-        String setblock = String.format("setblock ~ ~ ~ color_block:color_block 0 replace {Color:%d}",Colors.LINE_COLORS[trackId].toInt());
+        String setblock = String.format("setblock ~ ~ ~ color_block:color_block 0 replace {Color:%d}", Colors.LINE_COLORS[trackId].toInteger());
         if (tick < 180)
             add(1, relativePos(point.x, 0, point.y) + setblock);
         else
             add(tick - 180, relativePos(point.x, 0, point.y) + setblock);
         add(tick, relativePos(point.x, 0, point.y) + "setblock ~ ~ ~ air");
         add(tick, relativePos(point.x, 0, point.y)
-                + String.format("particleex fireworksSpark ~ ~ ~ function %s 1 240 0 0.5 0 0.5 0.5 0.5 ",
+                + String.format("particleex conditional fireworksSpark ~ ~ ~ %s 1 240 0 0.5 0 0.5 0.5 0.5 ",
                 Colors.COLORS[trackId].toCommandColor())
                 + "(x>=0.5&y>=0.5)|(x>=0.5&y<=-0.5)|(x<=-0.5&y>=0.5)|(x<=-0.5&y<=-0.5)|(y>=0.5&z>=0.5)|(y>=0.5&z<=-0.5)|(y<=-0.5&z>=0.5)|(y<=-0.5&z<=-0.5)|(z>=0.5&x>=0.5)|(z>=0.5&x<=-0.5)|(z<=-0.5&x>=0.5)|(z<=-0.5&x<=-0.5)"
                 + " 0.1 40");
         add(tick, relativePos(point.x, 0, point.y) +
-                String.format("particleex fireworksSpark ~ ~ ~ parameter %s 1 240 0 0 0 0 100 x=sin(t)/2;z=cos(t)/2 0.5 60 vx=sin(x/20);vz=sin(z/20)",
+                String.format("particleex parameter fireworksSpark ~ ~ ~ %s 1 240 0 0 0 0 100 x=sin(t)/2;z=cos(t)/2 0.5 60 vx=sin(x/20);vz=sin(z/20)",
                         Colors.LINE_COLORS[trackId].toCommandColor()));
     }
 

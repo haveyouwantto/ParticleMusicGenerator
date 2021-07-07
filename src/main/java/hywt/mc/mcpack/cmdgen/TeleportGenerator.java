@@ -22,32 +22,36 @@ public class TeleportGenerator extends CoorCommandGenerator {
         return layout;
     }
 
-    public void setLayout(KeyboardLayout layout) {
+    public TeleportGenerator setLayout(KeyboardLayout layout) {
         this.layout = layout;
+        return this;
     }
 
     public double getDistance() {
         return distance;
     }
 
-    public void setDistance(double distance) {
+    public TeleportGenerator setDistance(double distance) {
         this.distance = distance;
+        return this;
     }
 
     public long getLength() {
         return length;
     }
 
-    public void setLength(long length) {
+    public TeleportGenerator setLength(long length) {
         this.length = length;
+        return this;
     }
 
     public double getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
+    public TeleportGenerator setHeight(double height) {
         this.height = height;
+        return this;
     }
 
     @Override

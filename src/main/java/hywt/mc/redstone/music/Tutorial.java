@@ -31,27 +31,27 @@ public class Tutorial extends PianoRollMusicGenerator {
     }
 
     @Override
-    public void onInitialize() {
+    protected void onInitialize() {
 
     }
 
     @Override
-    public void onTrackStart(int trackNum) {
+    protected void onTrackStart(int trackNum) {
 
     }
 
     @Override
-    public void onNote(long tick, Note note) {
+    protected void onNote(long tick, Note note) {
         add(tick, String.format("say %s", note));
     }
 
     @Override
-    public void onLineUp(long startTick, long endTick, Note startNote, Note endNote) {
+    protected void onLineUp(long startTick, long endTick, Note startNote, Note endNote) {
 
     }
 
     @Override
-    public void onTick(long tick) {
+    protected void onTick(long tick) {
 
     }
 }

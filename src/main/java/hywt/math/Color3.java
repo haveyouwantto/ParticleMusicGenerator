@@ -1,5 +1,7 @@
 package hywt.math;
 
+import hywt.math.tensor.Vector3D;
+
 import java.util.Objects;
 
 public class Color3 {
@@ -26,12 +28,43 @@ public class Color3 {
         this.b = intVal & 0xff;
     }
 
-    public int toInt() {
-        return (r << 16) | (g << 8) | b;
+    public Color3 add(Color3 c) {
+        r += c.r;
+        g += c.g;
+        b += c.b;
+        return this;
+    }
+
+    public Color3 multiply(double mul) {
+        r *= mul;
+        g *= mul;
+        b *= mul;
+        return this;
+    }
+
+    public Color3 difference(Color3 c) {
+        return new Color3(r - c.r, g - c.g, b - c.b);
+    }
+
+
+    public double distance(Color3 other) {
+        return Math.sqrt(
+                Math.pow(Math.abs(r - other.r), 2) +
+                        Math.pow(Math.abs(g - other.g), 2) +
+                        Math.pow(Math.abs(b - other.b), 2)
+        );
+    }
+
+    public int toInteger() {
+        return (Mapper.clamp(r) << 16) | (Mapper.clamp(g) << 8) | Mapper.clamp(b);
     }
 
     public String toCommandColor() {
         return String.format("%f %f %f", this.r / 255d, this.g / 255d, this.b / 255d);
+    }
+
+    public Vector3D toVector3D() {
+        return new Vector3D(r, g, b);
     }
 
     @Override
@@ -56,5 +89,10 @@ public class Color3 {
                 ", g=" + g +
                 ", b=" + b +
                 '}';
+    }
+
+    @Override
+    public Color3 clone() {
+        return new Color3(r, g, b);
     }
 }

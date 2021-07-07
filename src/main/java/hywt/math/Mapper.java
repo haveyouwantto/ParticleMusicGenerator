@@ -13,6 +13,10 @@ public class Mapper {
         this.targetEnd = targetEnd;
     }
 
+    public static int clamp(int c) {
+        return Math.max(0, Math.min(255, c));
+    }
+
     public double map(double value) {
         return value / (sourceEnd - sourceStart) * (targetEnd - targetStart) + targetStart;
     }

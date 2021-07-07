@@ -1,6 +1,6 @@
 package hywt.mc.redstone.music;
 
-import hywt.math.Vector2D;
+import hywt.math.tensor.Vector2D;
 import hywt.mc.mcpack.FunctionWriter;
 import hywt.mc.mcpack.cmdgen.deprecated.LegacyParticleGenerator;
 

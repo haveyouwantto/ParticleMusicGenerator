@@ -1,5 +1,7 @@
 package hywt.math;
 
+import hywt.math.tensor.Vector2D;
+
 public class Line2D {
     public Point2D start;
     public Point2D end;
@@ -19,7 +21,7 @@ public class Line2D {
     }
 
     public double getLength() {
-        return this.toVector().getLength();
+        return this.toVector().length();
     }
 
     @Override

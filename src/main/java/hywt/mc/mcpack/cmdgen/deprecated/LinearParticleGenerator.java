@@ -1,7 +1,7 @@
 package hywt.mc.mcpack.cmdgen.deprecated;
 
 import hywt.math.Line2D;
-import hywt.math.Vector2D;
+import hywt.math.tensor.Vector2D;
 import hywt.mc.mcpack.cmdgen.CoorCommandGenerator;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class LinearParticleGenerator extends CoorCommandGenerator {
     public void add(long tick, Line2D line, int splits) {
         out.putIfAbsent(tick, new ArrayList<>());
         Vector2D vector2D = line.toVector();
-        Vector2D step = vector2D.divide(splits);
+        Vector2D step = vector2D.multiply(1d / splits);
         Vector2D v = (Vector2D) step.clone();
         for (int i = 0; i < splits; i++) {
             out.get(tick).add(relativePos(v.x + line.start.x, 0, v.y + line.start.y));

@@ -14,4 +14,5 @@ public abstract class CoorCommandGenerator implements CommandGenerator {
     protected String relativePos(double x, double y, double z) {
         return String.format("execute @s %f %f %f ", originX + x, originY + y, originZ + z);
     }
+
 }

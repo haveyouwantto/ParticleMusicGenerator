@@ -1,15 +1,12 @@
 package hywt.mc.mcpack;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FunctionWriter implements CommandWriter {
+public class FunctionWriter implements CommandWriter, Closeable {
 
-    private static final int MAX_COMMAND_LENGTH = 1024;
+    private static final int MAX_COMMAND_LENGTH = 8192;
     private final String name;
     private final MCMeta mcMeta;
     private final File rootDir;

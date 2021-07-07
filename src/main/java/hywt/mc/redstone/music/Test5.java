@@ -30,10 +30,10 @@ public class Test5 extends PianoRollMusicGenerator {
         generator = new ShapeGenerator(originX, originY, originZ);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         try {
             FunctionWriter writer = new FunctionWriter("test5",
-                    "I:\\Minecraft\\Java版\\.minecraft\\saves\\Command Music");
+                    "Z:\\JavaMC\\.minecraft\\saves\\Command Music");
             Test5 t = new Test5(27.5, 66, 8.5, new File("Toby Fox - Home.mid"),
                     new KeyboardLayout(2 / 3d, 1));
             t.writeTo(writer);
@@ -53,7 +53,7 @@ public class Test5 extends PianoRollMusicGenerator {
             add(tick - 180, relativePos(point.x, 0, point.y) + "setblock ~ ~ ~ concrete " + id);
         add(tick, relativePos(point.x, 0, point.y) + "setblock ~ ~ ~ air");
         add(tick, relativePos(point.x, 0, point.y)
-            + String.format("particleex fireworksSpark ~ ~ ~ function %s 1 240 0 0.5 0 0.5 0.5 0.5 ", color.toCommandColor())
+            + String.format("particleex conditional fireworksSpark ~ ~ ~ %s 1 240 0 0.5 0 0.5 0.5 0.5 ", color.toCommandColor())
             + "(x>=0.5&y>=0.5)|(x>=0.5&y<=-0.5)|(x<=-0.5&y>=0.5)|(x<=-0.5&y<=-0.5)|(y>=0.5&z>=0.5)|(y>=0.5&z<=-0.5)|(y<=-0.5&z>=0.5)|(y<=-0.5&z<=-0.5)|(z>=0.5&x>=0.5)|(z>=0.5&x<=-0.5)|(z<=-0.5&x>=0.5)|(z<=-0.5&x<=-0.5)"
             + " 0.1 40");
         // "particleex endRod ~ ~ ~ function 1 0.4 0.65 1 240 0 0 0 1 1 1
